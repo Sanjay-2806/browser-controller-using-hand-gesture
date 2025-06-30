@@ -31,7 +31,7 @@ print("show ur hand to swtich the tab")
 
 pt=0
 gcd=1.5
-
+ges=""
 
 while True:
     ret,frame=cap.read()
@@ -52,12 +52,14 @@ while True:
         if currenttime - pt > gcd:
             if fingers == [0,1,1,0,0]:
                 print("Next tab")
+                ges="next tab"
                 pyautogui.keyDown('ctrl')
                 pyautogui.press('tab')
                 pyautogui.keyUp('ctrl')
                 pt=currenttime
             elif fingers==[0,1,0,0,0]:
                 print("prev tab")
+                ges="prev tab"
                 pyautogui.keyDown('ctrl')
                 pyautogui.keyDown('shift')
                 pyautogui.press('tab')
@@ -66,37 +68,46 @@ while True:
                 pt=currenttime
             elif fingers==[0,0,0,0,0]:
                 print("zooming in")
+                ges="zooming in"
                 pyautogui.hotkey('command', '+')
                 pt=currenttime
             elif fingers==[1,1,1,1,1]:
                 print("zoom out")
+                ges="zoom out"
                 pyautogui.hotkey('command','-')
                 pt=currenttime
             elif fingers==[0,1,1,1,0]:
                 print("new tab")
+                ges="new tab"
                 pyautogui.hotkey('command','n')
                 pt=currenttime
             elif fingers==[0,0,0,0,1]:
                 print("close the new tab")
+                ges="close the new tab"
                 pyautogui.hotkey('command','w')
                 pt=currenttime
             elif fingers==[0,1,0,0,1]:
                 print("pause the vid")
+                ges="pause the vid"
                 pyautogui.press('space')
                 pt=currenttime
             elif fingers==[1,0,0,0,0]:
                 print("full screen")
+                ges="full screen"
                 pyautogui.press('f')
                 pt=currenttime
             elif fingers==[1,1,1,0,0]:
                 print("screenshot")
+                ges="screenshot"
                 pyautogui.hotkey('command','shift','3')
                 pt=currenttime
             elif fingers==[0,0,1,0,0]:
                 print("private browse")
+                ges="private browser"
                 pyautogui.hotkey('command','shift','n')
                 pt=currenttime
-            
+    cv.putText(frame, f"Gesture: {ges}", (20, 50),
+               cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3)      
     cv.imshow('gesture tab changing',frame)
     if cv.waitKey(2) & 0xFF==ord('q'):
         break
